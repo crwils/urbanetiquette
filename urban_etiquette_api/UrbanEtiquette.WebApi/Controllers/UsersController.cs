@@ -47,6 +47,25 @@ public class UsersController : ControllerBase
         return Ok(user);
     }
 
+    // PUT: api/users/{id}
+    [HttpPut("{id}")]
+    public async Task<ActionResult<User>> UpdateUser(Guid id, User user, CancellationToken cancellationToken)
+    {
+        var existingUser = await _dbContext.Users.FindAsync([id], cancellationToken);
+        
+        if (existingUser == null)
+        {
+            return NotFound();
+        }
+
+        existingUser.FirstName = user.FirstName;
+        existingUser.LastName = user.LastName;
+        existingUser.Email = user.Email;
+        existingUser.PhoneNumber = user.PhoneNumber;
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return Ok(existingUser);
+    }   
+
     //DELETE: api/users/{userId}
     [HttpDelete("{id}")]
     public async Task<ActionResult<User>> DeleteUser(Guid id, CancellationToken cancellationToken)
