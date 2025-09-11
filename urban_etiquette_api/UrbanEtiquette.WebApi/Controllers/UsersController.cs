@@ -46,4 +46,20 @@ public class UsersController : ControllerBase
 
         return Ok(user);
     }
+
+    //DELETE: api/users/{userId}
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<User>> DeleteUser(Guid id, CancellationToken cancellationToken)
+    {
+        var user = await _dbContext.Users.FindAsync([id], cancellationToken);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Users.Remove(user);
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return NoContent();
+    }
 }
