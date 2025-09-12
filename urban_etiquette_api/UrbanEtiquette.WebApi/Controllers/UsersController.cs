@@ -18,7 +18,7 @@ public class UsersController : ControllerBase
 
     // GET: api/users
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<User>>> GetUsers(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<UserEntity>>> GetUsers(CancellationToken cancellationToken)
     {
         var users = await _dbContext.Users.ToListAsync(cancellationToken);
         return Ok(users);
@@ -26,7 +26,7 @@ public class UsersController : ControllerBase
 
     // POST: api/users
     [HttpPost]
-    public async Task<ActionResult<User>> CreateUser(User user, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserEntity>> CreateUser(UserEntity user, CancellationToken cancellationToken)
     {
         _dbContext.Users.Add(user);
         await _dbContext.SaveChangesAsync(cancellationToken);
@@ -35,7 +35,7 @@ public class UsersController : ControllerBase
 
     // GET: api/users/{id}
     [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUser(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserEntity>> GetUser(Guid id, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Users.FindAsync([id], cancellationToken);
 
@@ -49,7 +49,7 @@ public class UsersController : ControllerBase
 
     // PUT: api/users/{id}
     [HttpPut("{id}")]
-    public async Task<ActionResult<User>> UpdateUser(Guid id, User user, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserEntity>> UpdateUser(Guid id, UserEntity user, CancellationToken cancellationToken)
     {
         var existingUser = await _dbContext.Users.FindAsync([id], cancellationToken);
         
@@ -68,7 +68,7 @@ public class UsersController : ControllerBase
 
     //DELETE: api/users/{userId}
     [HttpDelete("{id}")]
-    public async Task<ActionResult<User>> DeleteUser(Guid id, CancellationToken cancellationToken)
+    public async Task<ActionResult<UserEntity>> DeleteUser(Guid id, CancellationToken cancellationToken)
     {
         var user = await _dbContext.Users.FindAsync([id], cancellationToken);
 
