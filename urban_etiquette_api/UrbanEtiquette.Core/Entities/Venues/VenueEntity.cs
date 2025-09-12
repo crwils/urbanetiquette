@@ -15,8 +15,8 @@ public class VenueEntity : BaseEntity
     #endregion
 
     #region Location
-    public Guid? LocationId { get; set; }
-    public LocationEntity? Location { get; set; } = null!;
+    public Guid LocationId { get; set; }
+    public LocationEntity Location { get; set; } = null!;
     #endregion
 
 

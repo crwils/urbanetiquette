@@ -8,7 +8,7 @@ The database management tool is DBeaver
 
 # New Migration
 To run a new ef core migration, run the following command, replacing InitialCreate with unique migration name
-`dotnet ef migrations add InitialCreate --project UrbanEtiquette.Infrastructure --startup-project UrbanEtiquette.WebApi`
+`dotnet ef migrations add AddCoreEntities --project UrbanEtiquette.Infrastructure --startup-project UrbanEtiquette.WebApi`
 
 # Apply Migration to Database
 `dotnet ef database update --project UrbanEtiquette.Infrastructure --startup-project UrbanEtiquette.WebApi`

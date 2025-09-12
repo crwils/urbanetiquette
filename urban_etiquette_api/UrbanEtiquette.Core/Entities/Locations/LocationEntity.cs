@@ -13,5 +13,4 @@ public class LocationEntity : BaseEntity
     public decimal Longitude { get; set; }
 
     public List<TipEntity> Tips { get; set; } = [];
-    public List<UserEntity> Users { get; set; } = [];
 }

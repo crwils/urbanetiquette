@@ -62,6 +62,9 @@ public class UsersController : ControllerBase
         existingUser.LastName = user.LastName;
         existingUser.Email = user.Email;
         existingUser.PhoneNumber = user.PhoneNumber;
+        existingUser.LocationId = user.LocationId;
+        existingUser.AboutMe = user.AboutMe;
+        existingUser.RatingCount = user.RatingCount;
         await _dbContext.SaveChangesAsync(cancellationToken);
         return Ok(existingUser);
     }   

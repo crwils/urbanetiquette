@@ -18,7 +18,7 @@ public class TipEntity : BaseEntity
     #endregion
 
     #region Location
-    public Guid LocationId { get; set; } //FK
+    public Guid? LocationId { get; set; } //FK
     public LocationEntity? Location {get; set; } = null;
     #endregion
 

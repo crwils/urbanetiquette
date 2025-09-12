@@ -62,6 +62,9 @@ public class TipsController : ControllerBase
         existingTip.Description = tip.Description;
         existingTip.RatingCount = tip.RatingCount;
         existingTip.IsStaff = tip.IsStaff;
+        existingTip.LocationId = tip.LocationId;
+        existingTip.VenueTypeId = tip.VenueTypeId;
+        existingTip.UserId = tip.UserId;
         await _dbContext.SaveChangesAsync(cancellationToken);
         return Ok(existingTip);
     }

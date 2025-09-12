@@ -33,21 +33,62 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
         //     .HasIndex(u => u.Email)
         //     .IsUnique();
 
-        builder.Entity<VenueEntity>(entity =>
-        {
-            entity.OwnsOne(v => v.Location, loc =>
-            {
-                loc.Property(l => l.Latitude)
-                   .HasColumnType("decimal(9,6)");
+        // Venue → Location (Many-to-One)
+        builder.Entity<VenueEntity>()
+            .HasOne(v => v.Location)
+            .WithMany()
+            .HasForeignKey(v => v.LocationId)
+            .OnDelete(DeleteBehavior.Restrict);
+        
+        // Venue → VenueType (Many-to-One)
+        builder.Entity<VenueEntity>()
+            .HasOne(v => v.VenueType)
+            .WithMany()
+            .HasForeignKey(v => v.VenueTypeId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-                loc.Property(l => l.Longitude)
-                   .HasColumnType("decimal(9,6)");
+        // Tip → Location (Many-to-One) 
+        builder.Entity<TipEntity>()
+            .HasOne(t => t.Location)
+            .WithMany(l => l.Tips)
+            .HasForeignKey(t => t.LocationId)
+            .OnDelete(DeleteBehavior.SetNull);
 
-                // optional: give explicit column names
-                loc.Property(l => l.Latitude).HasColumnName("Latitude");
-                loc.Property(l => l.Longitude).HasColumnName("Longitude");
-            });
-        });
+        // Tip → User (Many-to-One)
+        builder.Entity<TipEntity>()
+            .HasOne(t => t.User)
+            .WithMany()
+            .HasForeignKey(t => t.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // Tip → VenueType (Many-to-One)
+        builder.Entity<TipEntity>()
+            .HasOne(t => t.VenueType)
+            .WithMany()
+            .HasForeignKey(t => t.VenueTypeId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // VenueType → VenueCategory (Many-to-One)
+        builder.Entity<VenueTypeEntity>()
+            .HasOne(vt => vt.VenueCategory)
+            .WithMany()
+            .HasForeignKey(vt => vt.VenueCategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        // VenueType → Location (Many-to-One, Optional)
+        builder.Entity<VenueTypeEntity>()
+            .HasOne(vt => vt.Location)
+            .WithMany()
+            .HasForeignKey(vt => vt.LocationId)
+            .OnDelete(DeleteBehavior.SetNull);
+
+        // User → Location (Many-to-One, Optional)
+        // Set the cascade delete behavior to set the LocationId to null instead of deleting the Location
+        builder.Entity<UserEntity>()
+            .HasOne(u => u.Location)
+            .WithMany()
+            .HasForeignKey(u => u.LocationId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         base.OnModelCreating(builder);
     }
