@@ -1,9 +1,10 @@
 import "./App.css";
-import TanstackTest from "./tanstacktest";
 import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./Routes";
 
 // Create a client
 const queryClient = new QueryClient()
@@ -11,8 +12,9 @@ const queryClient = new QueryClient()
 function App() {
     return (
       <QueryClientProvider client={queryClient}>
-            <div className="text-3xl font-bold underline">hello world</div>
-            <TanstackTest />
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
         </QueryClientProvider>
     );
 }
